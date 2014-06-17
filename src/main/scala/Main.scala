@@ -1,11 +1,9 @@
 
-import ar.com.crypticmind.swagger.modelgen.{DataTypeMapper, ModelRegister}
 import ar.com.crypticmind.swagger.modelgen.ModelGeneratorMacro._
-import com.wordnik.swagger.model.{ModelProperty, Model}
+import ar.com.crypticmind.swagger.modelgen.ModelRegister
+import com.wordnik.swagger.model.Model
 
 object Main extends App {
-
-    import reflect.runtime.universe._
 
   object AddressTypes extends Enumeration {
     val Home, Work = Value
@@ -23,16 +21,6 @@ object Main extends App {
       }
       model
     }
-  }
-
-  implicit def optionDataTypeMapper[T : TypeTag] = new DataTypeMapper[Option[T]] {
-    def toModelProperty(fieldName: String) = {
-      val dtm = DataTypeMapper.dataTypeMapperFor[T]
-//      if (dtm.generateModel)
-//        generate[T]
-      dtm.toModelProperty(fieldName).copy(required = false)
-    }
-    val generateModel = false
   }
 
   case class Address(line1: String, city: String, addressType: AddressTypes.Value)
