@@ -3,6 +3,7 @@ package ar.com.crypticmind.swagger.modelgen
 import com.wordnik.swagger.model.Model
 
 trait ModelRegister {
+  def get(id: String): Option[Model]
   def register(model: Model): Model
 }
 
@@ -41,13 +42,18 @@ object ModelGeneratorMacro {
 
     c.Expr[Model] {
       q"""
-        val model =
-          com.wordnik.swagger.model.Model(
-            id = $modelName,
-            name = $modelName,
-            qualifiedType = $modelName,
-            properties = scala.collection.mutable.LinkedHashMap(..$params))
-        implicitly[ModelRegister].register(model)
+        implicitly[ModelRegister].get($modelName) match {
+          case Some(existingModel) =>
+            existingModel
+          case None =>
+            val model =
+              com.wordnik.swagger.model.Model(
+                id = $modelName,
+                name = $modelName,
+                qualifiedType = $modelName,
+                properties = scala.collection.mutable.LinkedHashMap(..$params))
+            implicitly[ModelRegister].register(model)
+        }
       """
     }
   }

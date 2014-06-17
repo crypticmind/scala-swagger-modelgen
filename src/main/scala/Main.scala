@@ -13,7 +13,8 @@ object Main extends App {
 
   implicit val modelRegister = new ModelRegister {
     val registry: scala.collection.mutable.HashMap[String, Model] = scala.collection.mutable.HashMap.empty
-    override def register(model: Model) = {
+    def get(id: String) = registry.get(id)
+    def register(model: Model) = {
       registry.get(model.id) match {
         case Some(existingModel) => println(s"Skipping already registered model ${model.id}")
         case None =>
@@ -24,10 +25,13 @@ object Main extends App {
     }
   }
 
-  implicit def optionDataTypeMapper[T : DataTypeMapper : TypeTag] = new OptionDataTypeMapper[T]
-
-  class OptionDataTypeMapper[T : TypeTag] extends DataTypeMapper[Option[T]] {
-    def toModelProperty(fieldName: String) = ModelProperty(`type` = "Option[]", qualifiedType = "Option[]")
+  implicit def optionDataTypeMapper[T : TypeTag] = new DataTypeMapper[Option[T]] {
+    def toModelProperty(fieldName: String) = {
+      val dtm = DataTypeMapper.dataTypeMapperFor[T]
+//      if (dtm.generateModel)
+//        generate[T]
+      dtm.toModelProperty(fieldName).copy(required = false)
+    }
     val generateModel = false
   }
 
@@ -37,39 +41,5 @@ object Main extends App {
 
   val m = generate[Person]
   println(s"Generation returned model: $m")
-
-
-
-//  trait M[T] {
-//    def msg: String
-//  }
-//
-//  implicit val mInt = new M[Int] {
-//    val msg = "Int"
-//  }
-//
-//  case class A()
-//
-//  implicit val mA = new M[A] {
-//    val msg = "A"
-//  }
-//
-//  implicit def defaultFormat[T : TypeTag] = new M[T] {
-//    override val msg = typeOf[T].typeSymbol.name.toString
-//  }
-//
-//  implicit def optionFormat[T : M : TypeTag] = new OptionM[T]
-//
-//  class OptionM[T : TypeTag] extends M[Option[T]] {
-//    val typeName = typeOf[T].typeSymbol.name.toString
-//    override val msg = s"Option[$typeName]"
-//  }
-//
-//  def printTheType[T : M]() {
-//    println(implicitly[M[T]].msg)
-//  }
-//
-//  printTheType[Int]()
-//  printTheType[Option[A]]()
 
 }
