@@ -4,7 +4,7 @@ import com.wordnik.swagger.model.Model
 import language.experimental.macros
 import reflect.macros.whitebox.Context
 
-object ModelGeneratorMacro {
+object WordnikModelGeneratorMacro {
 
   def generate[T]: Model = macro generateImpl[T]
 
@@ -22,7 +22,7 @@ object ModelGeneratorMacro {
         case m: MethodSymbol if m.isPrimaryConstructor ⇒ m
       }.get.paramLists.head
 
-      val m = new ModelPropertyMapping[c.type](c)
+      val m = new WordnikModelPropertyMapping[c.type](c)
 
       val params = fields.map { field =>
         val fieldName = field.name.toString

@@ -3,7 +3,7 @@ package ar.com.crypticmind.swagger.modelgen
 import com.wordnik.swagger.model.ModelProperty
 import reflect.macros.whitebox.Context
 
-class ModelPropertyMapping[C <: Context](val c: C) {
+class WordnikModelPropertyMapping[C <: Context](val c: C) {
 
   abstract class ModelPropertyGenerator {
     def toModelProperty: c.Expr[ModelProperty]
