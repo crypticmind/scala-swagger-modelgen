@@ -9,6 +9,8 @@ object Build extends Build {
       scalacOptions := Seq(
         "-encoding",
         "utf8",
+        "-feature",
+        "-unchecked",
         "-deprecation",
         "-target:jvm-1.7"
       ),

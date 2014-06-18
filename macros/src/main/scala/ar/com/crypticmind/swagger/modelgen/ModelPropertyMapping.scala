@@ -73,7 +73,7 @@ class ModelPropertyMapping[C <: Context](val c: C) {
       c.Expr[ModelProperty] {
         q" ${mapperForType.toModelProperty}.copy(required = false, description = Some($mappedBy)) "
       }
-    val dependentTypes = Set(t.dealias.typeArgs.head)
+    val dependentTypes = mapperForType.dependentTypes
   }
 
   class EnumModelPropertyGenerator(t: c.Type) extends ModelPropertyGenerator {
@@ -83,6 +83,8 @@ class ModelPropertyMapping[C <: Context](val c: C) {
     def toModelProperty =
       c.Expr[ModelProperty] {
         q""" {
+          import reflect.runtime.universe._
+          import reflect.runtime._
           val tpe = typeOf[$t].asInstanceOf[TypeRef]
           val pre = tpe.pre
           val mod = pre.termSymbol.asModule
@@ -122,7 +124,7 @@ class ModelPropertyMapping[C <: Context](val c: C) {
         """
       }
     }
-    val dependentTypes = Set(t.dealias.typeArgs.head)
+    val dependentTypes = mapperForType.dependentTypes
   }
 
   def selectFor(t: c.Type): ModelPropertyGenerator = t match {
