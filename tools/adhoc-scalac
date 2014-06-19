@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import sys, os, tempfile
+from subprocess import call
+
+def wrap_snippet(snippet):
+    if "package" in snippet or "class" in snippet or "trait" in snippet or "object" in snippet:
+        return snippet
+    else:
+        return "class wrapper {\n" + snippet + "\n}"
+
+adhoc = not filter(lambda arg: arg.endswith(".scala"), sys.argv)
+if adhoc:
+    _, filename = tempfile.mkstemp()
+    try:
+        last_opt = len(sys.argv) - (i for i, arg in enumerate(reversed(sys.argv)) if arg.startswith("-")).next()
+    except:
+        last_opt = 1
+    snippet = " ".join(sys.argv[last_opt:])
+    wrapped = wrap_snippet(snippet)
+    with open(filename, "w") as f: f.write(wrapped)
+    sys.argv = sys.argv[:last_opt] + [filename]
+
+default_opts = ["-Yshow-trees-stringified", "-Yshow-trees-compact"]
+call(["scalac"] + default_opts + sys.argv[1:])
