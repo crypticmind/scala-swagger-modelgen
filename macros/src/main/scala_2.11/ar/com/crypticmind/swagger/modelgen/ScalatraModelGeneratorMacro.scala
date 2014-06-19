@@ -1,10 +1,10 @@
 package ar.com.crypticmind.swagger.modelgen
 
-import com.wordnik.swagger.model.Model
+import org.scalatra.swagger.Model
 import language.experimental.macros
 import reflect.macros.whitebox.Context
 
-object WordnikModelGeneratorMacro {
+object ScalatraModelGeneratorMacro {
 
   def generate[T]: Model = macro generateImpl[T]
 
@@ -22,7 +22,7 @@ object WordnikModelGeneratorMacro {
         case m: MethodSymbol if m.isPrimaryConstructor ⇒ m
       }.get.paramLists.head
 
-      val m = new WordnikModelPropertyMapping[c.type](c)
+      val m = new ScalatraModelPropertyMapping[c.type](c)
 
       val params = fields.map { field =>
         val fieldName = field.name.toString
@@ -46,17 +46,17 @@ object WordnikModelGeneratorMacro {
 
       c.Expr[Model] {
         q""" {
-          implicitly[ar.com.crypticmind.swagger.modelgen.WordnikModelRegister].get($modelName) match {
+          implicitly[ar.com.crypticmind.swagger.modelgen.ScalatraModelRegister].get($modelName) match {
             case Some(existingModel) =>
               existingModel
             case None =>
               val model =
-                com.wordnik.swagger.model.Model(
+                org.scalatra.swagger.Model(
                   id = $modelName,
                   name = $modelName,
-                  qualifiedType = $qualifiedName,
-                  properties = scala.collection.mutable.LinkedHashMap(..$params))
-              val registeredModel = implicitly[ar.com.crypticmind.swagger.modelgen.WordnikModelRegister].register(model)
+                  qualifiedName = Some($qualifiedName),
+                  properties = List(..$params))
+              val registeredModel = implicitly[ar.com.crypticmind.swagger.modelgen.ScalatraModelRegister].register(model)
               ..$generateDependentTypes
               registeredModel
           }

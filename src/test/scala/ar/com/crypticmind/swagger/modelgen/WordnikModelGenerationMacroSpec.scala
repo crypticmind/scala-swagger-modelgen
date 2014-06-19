@@ -4,18 +4,13 @@ import com.wordnik.swagger.model.{ModelRef, AllowableListValues, AnyAllowableVal
 import org.scalatest.{ShouldMatchers, WordSpec}
 import ar.com.crypticmind.swagger.modelgen.WordnikModelGeneratorMacro._
 
-// Has to be a stable type
-object SampleEnum extends Enumeration {
-  val A, B, C = Value
-}
-
 class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
   trait MapBacked {
     def registry: scala.collection.mutable.HashMap[String, Model]
   }
 
-  def defaultRegister = new ModelRegister with MapBacked {
+  def defaultRegister = new WordnikModelRegister with MapBacked {
     val registry: scala.collection.mutable.HashMap[String, Model] = scala.collection.mutable.HashMap.empty
 
     def get(id: String) = registry.get(id)
@@ -40,7 +35,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
         model should have(
           'id("Simple"),
           'name("Simple"),
-          'qualifiedType("Simple")
+          'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.Simple")
         )
       }
 
@@ -85,7 +80,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
         model should have(
           'id("Compound"),
           'name("Compound"),
-          'qualifiedType("Compound")
+          'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.Compound")
         )
       }
 
@@ -111,14 +106,14 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
       "list references to other classes" in {
 
         model.properties("c3") should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.Ref"),
+          'type("Ref"),
           'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.Ref"),
           'required(true),
           'allowableValues(AnyAllowableValues)
         )
         model.properties("c3").items should be('defined)
         model.properties("c3").items.get should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.Ref")
+          'type("Ref")
         )
       }
 
@@ -136,7 +131,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
           referencedModel should have(
             'id("Ref"),
             'name("Ref"),
-            'qualifiedType("Ref")
+            'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.Ref")
           )
         }
 
@@ -182,11 +177,11 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
           'items(None)
         )
         model.properties("cwov4") should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.RefOpt"),
+          'type("RefOpt"),
           'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.RefOpt"),
           'required(false),
           'allowableValues(AnyAllowableValues),
-          'items(Some(ModelRef(`type` = "ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.RefOpt")))
+          'items(Some(ModelRef(`type` = "RefOpt")))
         )
       }
 
@@ -273,7 +268,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
         )
         model.properties("cwiv4").items should be('defined)
         model.properties("cwiv4").items.get should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.RefIter")
+          'type("RefIter")
         )
       }
 
@@ -283,7 +278,6 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
       }
     }
   }
-
 
   "A class with a reference to itself" when {
 
@@ -303,12 +297,12 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
           'required(true)
         )
         model.properties("cc2") should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass"),
+          'type("CircularClass"),
           'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass"),
           'required(true)
         )
         model.properties("cc3") should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass"),
+          'type("CircularClass"),
           'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass"),
           'required(false)
         )
@@ -318,7 +312,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
           'required(true)
         )
         model.properties("cc5") should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.RefCirc"),
+          'type("RefCirc"),
           'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.RefCirc"),
           'required(true)
         )
@@ -328,19 +322,19 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
         model.properties("cc2").items should be('defined)
         model.properties("cc2").items.get should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass")
+          'type("CircularClass")
         )
         model.properties("cc3").items should be('defined)
         model.properties("cc3").items.get should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass")
+          'type("CircularClass")
         )
         model.properties("cc4").items should be('defined)
         model.properties("cc4").items.get should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass")
+          'type("CircularClass")
         )
         model.properties("cc5").items should be('defined)
         model.properties("cc5").items.get should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.RefCirc")
+          'type("RefCirc")
         )
       }
 
@@ -354,13 +348,13 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
         val referee = modelRegister.get("RefCirc").get
 
         referee.properties("rf1") should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass"),
+          'type("CircularClass"),
           'qualifiedType("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass"),
           'required(true)
         )
         referee.properties("rf1").items should be('defined)
         referee.properties("rf1").items.get should have(
-          'type("ar.com.crypticmind.swagger.modelgen.WordnikModelGenerationMacroSpec.CircularClass")
+          'type("CircularClass")
         )
       }
     }
