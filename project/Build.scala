@@ -4,7 +4,6 @@ import Keys._
 object Build extends Build {
 
   val commonSettings = Defaults.defaultSettings ++ Seq(
-//      scalaVersion := "2.11.0",
       crossScalaVersions := Seq("2.10.0", "2.11.0"),
       scalacOptions := Seq(
         "-encoding",
@@ -27,6 +26,7 @@ object Build extends Build {
     .dependsOn(macrosSub)
     .settings(commonSettings: _*)
     .settings(
+      parallelExecution in Test := false, // https://issues.scala-lang.org/browse/SI-6240
       libraryDependencies ++= Seq(
         "com.wordnik"       %   "swagger-core_2.10"     % "1.3.+"   % "test"
                 exclude("com.fasterxml.jackson.core",     "jackson-annotations")

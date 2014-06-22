@@ -1,8 +1,10 @@
 package ar.com.crypticmind.swagger.modelgen
 
 import org.scalatra.swagger.ModelProperty
+import reflect.macros.whitebox.Context
 
 class ScalatraModelPropertyMapping[C <: Context](val c: C) {
+  import c.universe._
 
   abstract class ModelPropertyGenerator {
     def toModelProperty: c.Expr[ModelProperty]
