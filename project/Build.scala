@@ -23,7 +23,7 @@ object Build extends Build {
         resolvers ++= Seq(
           "Sonatype OSS Releases"  at "http://oss.sonatype.org/content/repositories/releases/"
         ),
-        version := "0.1"
+        version := "0.2-SNAPSHOT"
       ) ++
       net.virtualvoid.sbt.graph.Plugin.graphSettings ++
       Publish.settings
