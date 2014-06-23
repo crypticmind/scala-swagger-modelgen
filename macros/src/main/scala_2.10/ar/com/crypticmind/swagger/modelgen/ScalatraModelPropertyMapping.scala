@@ -1,5 +1,6 @@
 package ar.com.crypticmind.swagger.modelgen
 
+import org.joda.time.{LocalDateTime, DateTime, LocalDate}
 import org.scalatra.swagger.ModelProperty
 import scala.reflect.macros.Context
 
@@ -45,6 +46,203 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
             AssignOrNamedArg(
               Ident(newTermName("type")),
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Int"))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object DoubleModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "DoubleModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Double"))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object FloatModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "FloatModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Float"))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object LongModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "LongModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Long"))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object CharModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "CharModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Apply(
+                Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")),
+                List(
+                  Literal(Constant("string")),
+                  Apply(Ident(newTermName("Some")), List(Literal(Constant("char(1)"))))))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object ShortModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "ShortModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Apply(
+                Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")),
+                List(
+                  Literal(Constant("integer")),
+                  Apply(Ident(newTermName("Some")), List(Literal(Constant("int16"))))))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object ByteModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "ByteModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Byte"))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object BooleanModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "BooleanModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Boolean"))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object LocalDateModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "LocalDateModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Date"))),
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true))),
+            AssignOrNamedArg(
+              Ident(newTermName("description")),
+              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
+  object LocalDateTimeModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "(Local)DateTimeModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    val toModelProperty =
+      c.Expr[ModelProperty] {
+        Apply(
+          Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
+          List(
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
+              Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("DateTime"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
               Literal(Constant(true))),
@@ -192,6 +390,16 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
   def selectFor(t: c.Type): ModelPropertyGenerator = t match {
     case str if t <:< c.typeOf[String] => StringModelPropertyGenerator
     case int if t <:< c.typeOf[Int] => IntModelPropertyGenerator
+    case dbl if t <:< c.typeOf[Double] => DoubleModelPropertyGenerator
+    case flt if t <:< c.typeOf[Float] => FloatModelPropertyGenerator
+    case lng if t <:< c.typeOf[Long] => LongModelPropertyGenerator
+    case chr if t <:< c.typeOf[Char] => CharModelPropertyGenerator
+    case shr if t <:< c.typeOf[Short] => ShortModelPropertyGenerator
+    case bte if t <:< c.typeOf[Byte] => ByteModelPropertyGenerator
+    case bln if t <:< c.typeOf[Boolean] => BooleanModelPropertyGenerator
+    case dte if t <:< c.typeOf[LocalDate] => LocalDateModelPropertyGenerator
+    case ldt if t <:< c.typeOf[LocalDateTime] => LocalDateTimeModelPropertyGenerator
+    case dti if t <:< c.typeOf[DateTime] => LocalDateTimeModelPropertyGenerator
     case opt if t <:< c.typeOf[Option[_]] => new OptionModelPropertyGenerator(opt)
     case enm if t <:< c.typeOf[Enumeration#Value] => new EnumModelPropertyGenerator(enm)
     case itr if t <:< c.typeOf[Iterable[_]] => new IterModelPropertyGenerator(itr)

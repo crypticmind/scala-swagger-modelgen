@@ -41,6 +41,7 @@ object Build extends Build {
         "org.scalatra"      %   "scalatra-swagger_2.10" % "2.3.+"   % "provided"
                 exclude("com.typesafe.akka", "akka-actor")
                 exclude("com.wordnik",                    "swagger-core_2.9.1"),
+        "joda-time"         % "joda-time"               % "2.3"     % "provided",
         "org.scalatest"     %%  "scalatest"             % "2.1.7"   % "test"
       )
     )
@@ -62,7 +63,8 @@ object Build extends Build {
                 exclude("org.json4s",                     "json4s-native_2.10"),
         "org.scalatra"      %   "scalatra-swagger_2.10" % "2.3.+"   % "provided"
                 exclude("com.typesafe.akka", "akka-actor")
-                exclude("com.wordnik",                    "swagger-core_2.9.1")
+                exclude("com.wordnik",                    "swagger-core_2.9.1"),
+        "joda-time"         % "joda-time"               % "2.3"     % "provided"
       ),
       unmanagedSourceDirectories in Compile <+= (scalaVersion, sourceDirectory in Compile) {
         case (v, dir) if v startsWith "2.10" => dir / "scala_2.10"

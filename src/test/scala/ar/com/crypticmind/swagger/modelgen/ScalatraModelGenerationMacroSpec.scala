@@ -1,6 +1,7 @@
 package ar.com.crypticmind.swagger.modelgen
 
 import ar.com.crypticmind.swagger.modelgen.ScalatraModelGeneratorMacro._
+import org.joda.time.{DateTime, LocalDateTime, LocalDate}
 import org.scalatest.{ShouldMatchers, WordSpec}
 import org.scalatra.swagger.{ModelProperty, DataType, AllowableValues, Model}
 import scala.language.implicitConversions
@@ -31,7 +32,18 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
   "An all-scalar class" when {
 
-    class Simple(s1: String, s2: Int)
+    class Simple(f_String: String,
+                 f_Int: Int,
+                 f_Double: Double,
+                 f_Float: Float,
+                 f_Long: Long,
+                 f_Char: Char,
+                 f_Short: Short,
+                 f_Byte: Byte,
+                 f_Boolean: Boolean,
+                 f_LocalDate: LocalDate,
+                 f_LocalDateTime: LocalDateTime,
+                 f_DateTime: DateTime)
 
     "converted to Swagger model" should {
 
@@ -49,15 +61,82 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "list its basic-type properties" in {
 
-        model.properties.names should equal(Seq("s1", "s2"))
-        model.properties.get("s1") should have(
+        model.properties.names should equal(Seq(
+          "f_String",
+          "f_Int",
+          "f_Double",
+          "f_Float",
+          "f_Long",
+          "f_Char",
+          "f_Short",
+          "f_Byte",
+          "f_Boolean",
+          "f_LocalDate",
+          "f_LocalDateTime",
+          "f_DateTime"))
+
+        model.properties.get("f_String") should have(
           'type(DataType.String),
           'required(true),
           'allowableValues(AllowableValues.AnyValue),
           'items(None)
         )
-        model.properties.get("s2") should have(
+        model.properties.get("f_Int") should have(
           'type(DataType.Int),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_Double") should have(
+          'type(DataType.Double),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_Float") should have(
+          'type(DataType.Float),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_Long") should have(
+          'type(DataType.Long),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_Char") should have(
+          'type(DataType("string", Some("char(1)"))),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_Short") should have(
+          'type(DataType("integer", Some("int16"))),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_Byte") should have(
+          'type(DataType.Byte),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_LocalDate") should have(
+          'type(DataType.Date),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_LocalDateTime") should have(
+          'type(DataType.DateTime),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_DateTime") should have(
+          'type(DataType.DateTime),
           'required(true),
           'allowableValues(AllowableValues.AnyValue),
           'items(None)
