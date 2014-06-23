@@ -3,24 +3,30 @@ import Keys._
 
 object Build extends Build {
 
-  val commonSettings = Defaults.defaultSettings ++ Seq(
-      crossScalaVersions := Seq("2.10.0", "2.11.0"),
-      scalacOptions := Seq(
-        "-encoding",
-        "utf8",
-        "-feature",
-        "-unchecked",
-        "-deprecation",
-        "-target:jvm-1.7"
-      ),
-      javacOptions := Seq(
-        "-source:1.7",
-        "-target:1.7"
-      ),
-      resolvers ++= Seq(
-        "Sonatype OSS Releases"  at "http://oss.sonatype.org/content/repositories/releases/"
-      )
-    ) ++ net.virtualvoid.sbt.graph.Plugin.graphSettings
+  val commonSettings =
+    Defaults.defaultSettings ++
+      Seq(
+        organization := "ar.com.crypticmind",
+        crossScalaVersions := Seq("2.10.0", "2.11.0"),
+        scalacOptions := Seq(
+          "-encoding",
+          "utf8",
+          "-feature",
+          "-unchecked",
+          "-deprecation",
+          "-target:jvm-1.7"
+        ),
+        javacOptions := Seq(
+          "-source:1.7",
+          "-target:1.7"
+        ),
+        resolvers ++= Seq(
+          "Sonatype OSS Releases"  at "http://oss.sonatype.org/content/repositories/releases/"
+        ),
+        version := "0.1-SNAPSHOT"
+      ) ++
+      net.virtualvoid.sbt.graph.Plugin.graphSettings ++
+      Publish.settings
 
   lazy val main = Project("tests", file("."))
     .dependsOn(macrosSub)
@@ -45,8 +51,9 @@ object Build extends Build {
         "org.scalatest"     %%  "scalatest"             % "2.1.7"   % "test"
       )
     )
+    .settings(Publish.noPublishing: _*)
 
-  lazy val macrosSub = Project("macros", file("macros"))
+  lazy val macrosSub = Project("scala-swagger-modelgen", file("macros"))
     .settings(commonSettings: _*)
     .settings(
       libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _),

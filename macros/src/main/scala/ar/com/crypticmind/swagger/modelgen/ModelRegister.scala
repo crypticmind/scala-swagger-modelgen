@@ -1,7 +1,7 @@
 package ar.com.crypticmind.swagger.modelgen
 
-import com.wordnik.swagger.model.{Model => WordnikModel}
-import org.scalatra.swagger.{Model => ScalatraModel}
+import com.wordnik.swagger.model.{ Model => WordnikModel }
+import org.scalatra.swagger.{ Model => ScalatraModel }
 
 trait WordnikModelRegister {
   def get(id: String): Option[WordnikModel]

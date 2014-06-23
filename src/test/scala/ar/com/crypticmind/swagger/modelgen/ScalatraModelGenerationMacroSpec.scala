@@ -1,9 +1,9 @@
 package ar.com.crypticmind.swagger.modelgen
 
 import ar.com.crypticmind.swagger.modelgen.ScalatraModelGeneratorMacro._
-import org.joda.time.{DateTime, LocalDateTime, LocalDate}
-import org.scalatest.{ShouldMatchers, WordSpec}
-import org.scalatra.swagger.{ModelProperty, DataType, AllowableValues, Model}
+import org.joda.time.{ DateTime, LocalDateTime, LocalDate }
+import org.scalatest.{ ShouldMatchers, WordSpec }
+import org.scalatra.swagger.{ ModelProperty, DataType, AllowableValues, Model }
 import scala.language.implicitConversions
 
 class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
@@ -145,7 +145,7 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry" in {
 
-        modelRegister.registry.keySet should be (Set("Simple"))
+        modelRegister.registry.keySet should be(Set("Simple"))
       }
     }
   }
@@ -198,7 +198,7 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry along with referenced classes" in {
 
-        modelRegister.registry.keySet should be (Set("Compound", "Ref"))
+        modelRegister.registry.keySet should be(Set("Compound", "Ref"))
       }
 
       "generate model for referenced classes as well" which {
@@ -262,7 +262,7 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry along with referenced classes" in {
 
-        modelRegister.registry.keySet should be (Set("ClassWithOptionalValue", "RefOpt"))
+        modelRegister.registry.keySet should be(Set("ClassWithOptionalValue", "RefOpt"))
       }
     }
   }
@@ -296,7 +296,7 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry with no other references" in {
 
-        modelRegister.registry.keySet should be (Set("ClassWithEnumValue"))
+        modelRegister.registry.keySet should be(Set("ClassWithEnumValue"))
       }
     }
   }
@@ -329,7 +329,7 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry along with referenced classes" in {
 
-        modelRegister.registry.keySet should be (Set("ClassWithIterableValue", "RefIter"))
+        modelRegister.registry.keySet should be(Set("ClassWithIterableValue", "RefIter"))
       }
     }
   }
@@ -370,7 +370,7 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry" in {
 
-        modelRegister.registry.keySet should be (Set("CircularClass", "RefCirc"))
+        modelRegister.registry.keySet should be(Set("CircularClass", "RefCirc"))
       }
 
       "include in the registry the referee class to references the referrer" in {
