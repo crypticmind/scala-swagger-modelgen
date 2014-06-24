@@ -51,7 +51,7 @@ object ScalatraModelGeneratorMacro {
 
       c.Expr[Model] {
         q""" {
-          implicitly[ar.com.crypticmind.swagger.modelgen.ScalatraModelRegister].get($modelName) match {
+          implicitly[ar.com.crypticmind.swagger.modelgen.ModelRegister[org.scalatra.swagger.Model]].get($modelName) match {
             case Some(existingModel) =>
               existingModel
             case None =>
@@ -61,7 +61,7 @@ object ScalatraModelGeneratorMacro {
                   name = $modelName,
                   qualifiedName = Some($qualifiedName),
                   properties = List(..$params))
-              val registeredModel = implicitly[ar.com.crypticmind.swagger.modelgen.ScalatraModelRegister].register(model)
+              val registeredModel = implicitly[ar.com.crypticmind.swagger.modelgen.ModelRegister[org.scalatra.swagger.Model]].register(model)
               ..$generateDependentTypes
               registeredModel
           }

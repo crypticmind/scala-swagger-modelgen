@@ -51,29 +51,36 @@ object ScalatraModelGeneratorMacro {
       val qualifiedName = tpe.typeSymbol.asClass.fullName
 
       c.Expr[Model] {
-        Match(
-          Apply(
-            Select(TypeApply(Ident(newTermName("implicitly")),
-              List(Select(Select(Select(Select(Select(Ident(newTermName("ar")), newTermName("com")), newTermName("crypticmind")), newTermName("swagger")), newTermName("modelgen")), newTypeName("ScalatraModelRegister")))), newTermName("get")),
-            List(Literal(Constant(modelName)))),
-          List(
-            CaseDef(Apply(Ident(newTermName("Some")), List(Bind(newTermName("existingModel"), Ident(nme.WILDCARD)))), EmptyTree,
-              Ident(newTermName("existingModel"))),
-            CaseDef(Ident(newTermName("None")), EmptyTree,
-              Block(
-                List(
-                  ValDef(Modifiers(), newTermName("model"), TypeTree(),
-                    Apply(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("Model")),
-                      List(
-                        AssignOrNamedArg(Ident(newTermName("id")), Literal(Constant(modelName))),
-                        AssignOrNamedArg(Ident(newTermName("name")), Literal(Constant(modelName))),
-                        AssignOrNamedArg(Ident(newTermName("qualifiedName")), Apply(Ident(newTermName("Some")), List(Literal(Constant(qualifiedName))))),
-                        AssignOrNamedArg(Ident(newTermName("properties")), Apply(Ident(newTermName("List")), params))
-                      ))),
-                  ValDef(Modifiers(), newTermName("registeredModel"), TypeTree(),
-                    Apply(Select(TypeApply(Ident(newTermName("implicitly")), List(Select(Select(Select(Select(Select(Ident(newTermName("ar")), newTermName("com")), newTermName("crypticmind")), newTermName("swagger")), newTermName("modelgen")), newTypeName("ScalatraModelRegister")))), newTermName("register")), List(Ident(newTermName("model")))))
-                ) ++ generateDependentTypes,
-                Ident(newTermName("registeredModel"))))))
+          Match(
+            Apply(Select(TypeApply(
+              Ident(newTermName("implicitly")),
+              List(
+                AppliedTypeTree(
+                  Select(Select(Select(Select(Select(Ident(newTermName("ar")), newTermName("com")), newTermName("crypticmind")), newTermName("swagger")), newTermName("modelgen")), newTypeName("ModelRegister")),
+                  List(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTypeName("Model")))))), newTermName("get")), List(Literal(Constant(modelName)))),
+            List(
+              CaseDef(Apply(Ident(newTermName("Some")), List(Bind(newTermName("existingModel"), Ident(nme.WILDCARD)))), EmptyTree,
+                Ident(newTermName("existingModel"))),
+              CaseDef(Ident(newTermName("None")), EmptyTree,
+                Block(
+                  List(
+                    ValDef(Modifiers(), newTermName("model"), TypeTree(),
+                      Apply(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("Model")),
+                        List(
+                          AssignOrNamedArg(Ident(newTermName("id")), Literal(Constant(modelName))),
+                          AssignOrNamedArg(Ident(newTermName("name")), Literal(Constant(modelName))),
+                          AssignOrNamedArg(Ident(newTermName("qualifiedName")), Apply(Ident(newTermName("Some")), List(Literal(Constant(qualifiedName))))),
+                          AssignOrNamedArg(Ident(newTermName("properties")), Apply(Ident(newTermName("List")), params))
+                        ))),
+                    ValDef(Modifiers(), newTermName("registeredModel"), TypeTree(),
+                      Apply(Select(TypeApply(
+                        Ident(newTermName("implicitly")),
+                        List(
+                          AppliedTypeTree(
+                            Select(Select(Select(Select(Select(Ident(newTermName("ar")), newTermName("com")), newTermName("crypticmind")), newTermName("swagger")), newTermName("modelgen")), newTypeName("ModelRegister")),
+                            List(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTypeName("Model")))))), newTermName("register")), List(Ident(newTermName("model")))))
+                  ) ++ generateDependentTypes,
+                  Ident(newTermName("registeredModel"))))))
       }
     }
   }

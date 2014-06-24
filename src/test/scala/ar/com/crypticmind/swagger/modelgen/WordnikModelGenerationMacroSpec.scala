@@ -6,19 +6,14 @@ import ar.com.crypticmind.swagger.modelgen.WordnikModelGeneratorMacro._
 
 class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
-  trait MapBacked {
-    def registry: scala.collection.mutable.HashMap[String, Model]
-  }
-
-  def defaultRegister = new WordnikModelRegister with MapBacked {
+  def defaultRegister = new ModelRegister[Model] {
     val registry: scala.collection.mutable.HashMap[String, Model] = scala.collection.mutable.HashMap.empty
-
     def get(id: String) = registry.get(id)
-
     def register(model: Model) = {
       registry.put(model.id, model)
       model
     }
+    def names = registry.keySet.toSet
   }
 
   "An all-scalar class" when {
@@ -60,7 +55,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry" in {
 
-        modelRegister.registry.keySet should be(Set("Simple"))
+        modelRegister.names should be(Set("Simple"))
       }
     }
   }
@@ -119,7 +114,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry along with referenced classes" in {
 
-        modelRegister.registry.keySet should be(Set("Compound", "Ref"))
+        modelRegister.names should be(Set("Compound", "Ref"))
       }
 
       "generate model for referenced classes as well" which {
@@ -187,7 +182,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry along with referenced classes" in {
 
-        modelRegister.registry.keySet should be(Set("ClassWithOptionalValue", "RefOpt"))
+        modelRegister.names should be(Set("ClassWithOptionalValue", "RefOpt"))
       }
     }
   }
@@ -222,7 +217,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry with no other references" in {
 
-        modelRegister.registry.keySet should be(Set("ClassWithEnumValue"))
+        modelRegister.names should be(Set("ClassWithEnumValue"))
       }
     }
   }
@@ -274,7 +269,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry along with referenced classes" in {
 
-        modelRegister.registry.keySet should be(Set("ClassWithIterableValue", "RefIter"))
+        modelRegister.names should be(Set("ClassWithIterableValue", "RefIter"))
       }
     }
   }
@@ -340,7 +335,7 @@ class WordnikModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
 
       "be included in the model registry" in {
 
-        modelRegister.registry.keySet should be(Set("CircularClass", "RefCirc"))
+        modelRegister.names should be(Set("CircularClass", "RefCirc"))
       }
 
       "include in the registry the referee class to references the referrer" in {

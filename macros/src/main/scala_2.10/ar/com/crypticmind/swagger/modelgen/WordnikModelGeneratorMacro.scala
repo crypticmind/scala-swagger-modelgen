@@ -48,7 +48,11 @@ object WordnikModelGeneratorMacro {
       c.Expr[Model] {
         Match(
           Apply(
-            Select(TypeApply(Ident(newTermName("implicitly")), List(Select(Select(Select(Select(Select(Ident(newTermName("ar")), newTermName("com")), newTermName("crypticmind")), newTermName("swagger")), newTermName("modelgen")), newTypeName("WordnikModelRegister")))), newTermName("get")),
+            Select(
+              TypeApply(Ident(
+                newTermName("implicitly")),
+                List(AppliedTypeTree(Select(Select(Select(Select(Select(Ident(newTermName("ar")), newTermName("com")), newTermName("crypticmind")), newTermName("swagger")), newTermName("modelgen")), newTypeName("ModelRegister")), List(Select(Select(Select(Select(Ident(newTermName("com")), newTermName("wordnik")), newTermName("swagger")), newTermName("model")), newTypeName("Model")))))),
+              newTermName("get")),
             List(Literal(Constant(modelName)))),
           List(
             CaseDef(Apply(Ident(newTermName("Some")), List(Bind(newTermName("existingModel"), Ident(nme.WILDCARD)))), EmptyTree,
@@ -65,7 +69,13 @@ object WordnikModelGeneratorMacro {
                         Apply(Select(Select(Select(Ident(newTermName("scala")), newTermName("collection")), newTermName("mutable")), newTermName("LinkedHashMap")), params)
                       ))),
                   ValDef(Modifiers(), newTermName("registeredModel"), TypeTree(),
-                    Apply(Select(TypeApply(Ident(newTermName("implicitly")), List(Select(Select(Select(Select(Select(Ident(newTermName("ar")), newTermName("com")), newTermName("crypticmind")), newTermName("swagger")), newTermName("modelgen")), newTypeName("WordnikModelRegister")))), newTermName("register")), List(Ident(newTermName("model")))))
+                    Apply(
+                      Select(
+                        TypeApply(Ident(
+                          newTermName("implicitly")),
+                          List(AppliedTypeTree(Select(Select(Select(Select(Select(Ident(newTermName("ar")), newTermName("com")), newTermName("crypticmind")), newTermName("swagger")), newTermName("modelgen")), newTypeName("ModelRegister")), List(Select(Select(Select(Select(Ident(newTermName("com")), newTermName("wordnik")), newTermName("swagger")), newTermName("model")), newTypeName("Model")))))),
+                        newTermName("register")),
+                      List(Ident(newTermName("model")))))
                 ) ++ generateDependentTypes,
                 Ident(newTermName("registeredModel"))))))
       }

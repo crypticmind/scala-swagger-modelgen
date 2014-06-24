@@ -46,7 +46,7 @@ object WordnikModelGeneratorMacro {
 
       c.Expr[Model] {
         q""" {
-          implicitly[ar.com.crypticmind.swagger.modelgen.WordnikModelRegister].get($modelName) match {
+          implicitly[ar.com.crypticmind.swagger.modelgen.ModelRegister[com.wordnik.swagger.model.Model]].get($modelName) match {
             case Some(existingModel) =>
               existingModel
             case None =>
@@ -56,7 +56,7 @@ object WordnikModelGeneratorMacro {
                   name = $modelName,
                   qualifiedType = $qualifiedName,
                   properties = scala.collection.mutable.LinkedHashMap(..$params))
-              val registeredModel = implicitly[ar.com.crypticmind.swagger.modelgen.WordnikModelRegister].register(model)
+              val registeredModel = implicitly[ar.com.crypticmind.swagger.modelgen.ModelRegister[com.wordnik.swagger.model.Model]].register(model)
               ..$generateDependentTypes
               registeredModel
           }
