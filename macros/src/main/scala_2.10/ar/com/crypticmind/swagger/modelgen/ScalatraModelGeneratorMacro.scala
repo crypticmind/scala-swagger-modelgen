@@ -19,9 +19,14 @@ object ScalatraModelGeneratorMacro {
     def processType(tpe: c.Type, filterDependentTypes: Set[c.Type] = Set.empty[c.Type]): c.Expr[Model] = {
       import c.universe._
 
-      val fields = tpe.declarations.collectFirst {
+      val primaryConstructor = tpe.declarations.collectFirst {
         case m: MethodSymbol if m.isPrimaryConstructor ⇒ m
-      }.get.paramss.head
+      }
+
+      val fields = primaryConstructor match {
+        case Some(pc) => pc.paramss.head
+        case None => List.empty
+      }
 
       val m = new ScalatraModelPropertyMapping[c.type](c)
       val params = fields.map { field =>

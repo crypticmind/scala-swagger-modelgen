@@ -87,6 +87,21 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
     val dependentTypes = Set.empty[c.Type]
   }
 
+  object BigDecimalModelPropertyGenerator extends ModelPropertyGenerator {
+    override val toString = "BigDecimalModelPropertyGenerator"
+    val mappedBy = s"Mapped by ${this.toString}"
+    def toModelProperty =
+      c.Expr[ModelProperty] {
+        q"""
+          org.scalatra.swagger.ModelProperty(
+            `type` = org.scalatra.swagger.DataType("decimal", None),
+            required = true,
+            description = Some($mappedBy))
+        """
+      }
+    val dependentTypes = Set.empty[c.Type]
+  }
+
   object CharModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "CharModelPropertyGenerator"
     val mappedBy = s"Mapped by ${this.toString}"
@@ -258,6 +273,7 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
     case dbl if t <:< c.typeOf[Double] => DoubleModelPropertyGenerator
     case flt if t <:< c.typeOf[Float] => FloatModelPropertyGenerator
     case lng if t <:< c.typeOf[Long] => LongModelPropertyGenerator
+    case lng if t <:< c.typeOf[BigDecimal] => BigDecimalModelPropertyGenerator
     case chr if t <:< c.typeOf[Char] => CharModelPropertyGenerator
     case shr if t <:< c.typeOf[Short] => ShortModelPropertyGenerator
     case bte if t <:< c.typeOf[Byte] => ByteModelPropertyGenerator

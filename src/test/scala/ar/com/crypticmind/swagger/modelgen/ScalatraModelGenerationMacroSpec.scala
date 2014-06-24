@@ -37,6 +37,7 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
                  f_Double: Double,
                  f_Float: Float,
                  f_Long: Long,
+                 f_BigDecimal: BigDecimal,
                  f_Char: Char,
                  f_Short: Short,
                  f_Byte: Byte,
@@ -67,6 +68,7 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
           "f_Double",
           "f_Float",
           "f_Long",
+          "f_BigDecimal",
           "f_Char",
           "f_Short",
           "f_Byte",
@@ -101,6 +103,12 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
         )
         model.properties.get("f_Long") should have(
           'type(DataType.Long),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+        model.properties.get("f_BigDecimal") should have(
+          'type(DataType("decimal", None)),
           'required(true),
           'allowableValues(AllowableValues.AnyValue),
           'items(None)
@@ -381,6 +389,68 @@ class ScalatraModelGenerationMacroSpec extends WordSpec with ShouldMatchers {
           'type(DataType.ValueDataType("CircularClass", None, Some("ar.com.crypticmind.swagger.modelgen.ScalatraModelGenerationMacroSpec.CircularClass"))),
           'required(true)
         )
+      }
+    }
+  }
+
+  "A class with a property that is a trait" when {
+
+    trait RefTrait {
+      val r1: String
+    }
+    class ClassWithATraitProperty(cwatp1: String, cwatp2: RefTrait)
+
+    "converted to Swagger model" should {
+
+      implicit val modelRegister = defaultRegister
+      val model = generate[ClassWithATraitProperty]
+
+      "indicate its type" in {
+
+        model should have(
+          'id("ClassWithATraitProperty"),
+          'name("ClassWithATraitProperty"),
+          'qualifiedName(Some("ar.com.crypticmind.swagger.modelgen.ScalatraModelGenerationMacroSpec.ClassWithATraitProperty"))
+        )
+      }
+
+      "list its properties" in {
+
+        model.properties.names should equal(Seq("cwatp1", "cwatp2"))
+      }
+
+      "have a reference to the trait" in {
+
+        model.properties.get("cwatp2") should have(
+          'type(DataType.ValueDataType("RefTrait", None, Some("ar.com.crypticmind.swagger.modelgen.ScalatraModelGenerationMacroSpec.RefTrait"))),
+          'required(true),
+          'allowableValues(AllowableValues.AnyValue),
+          'items(None)
+        )
+      }
+
+      "be included in the model registry along with referenced classes" in {
+
+        modelRegister.registry.keySet should be(Set("ClassWithATraitProperty", "RefTrait"))
+      }
+
+      "generate model for referenced classes as well" which {
+
+        val referencedModel = modelRegister.get("RefTrait").get
+
+        "indicates its type" in {
+
+          referencedModel should have(
+            'id("RefTrait"),
+            'name("RefTrait"),
+            'qualifiedName(Some("ar.com.crypticmind.swagger.modelgen.ScalatraModelGenerationMacroSpec.RefTrait"))
+          )
+        }
+
+        "list no properties" in {
+
+          referencedModel.properties.names should be('empty)
+        }
       }
     }
   }
