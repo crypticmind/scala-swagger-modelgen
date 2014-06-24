@@ -16,7 +16,6 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object StringModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "StringModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -27,17 +26,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("String"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object IntModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "IntModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -48,17 +43,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Int"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object DoubleModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "DoubleModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -69,17 +60,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Double"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object FloatModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "FloatModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -90,17 +77,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Float"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object LongModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "LongModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -111,17 +94,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Long"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object BigDecimalModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "BigDecimalModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -136,17 +115,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
                   Ident(newTermName("None"))))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object CharModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "CharModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -161,17 +136,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
                   Apply(Ident(newTermName("Some")), List(Literal(Constant("char(1)"))))))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object ShortModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "ShortModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -186,17 +157,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
                   Apply(Ident(newTermName("Some")), List(Literal(Constant("int16"))))))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object ByteModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "ByteModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -207,17 +174,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Byte"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object BooleanModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "BooleanModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -228,17 +191,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Boolean"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object LocalDateModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "LocalDateModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -249,17 +208,13 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("Date"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object LocalDateTimeModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "(Local)DateTimeModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -270,10 +225,7 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
               Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("DateTime"))),
             AssignOrNamedArg(
               Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(
-              Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
@@ -282,23 +234,22 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
     val objectName = t.typeSymbol.name.toString
     val qualifiedName = t.typeSymbol.asClass.fullName
     override val toString = "ObjectModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}($objectName)"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
           Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("ModelProperty")),
           List(
-            AssignOrNamedArg(Ident(newTermName("type")),
+            AssignOrNamedArg(
+              Ident(newTermName("type")),
               Apply(
                 Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("DataType")), newTermName("ValueDataType")),
                 List(
                   Literal(Constant(objectName)),
                   Ident(newTermName("None")),
                   Apply(Ident(newTermName("Some")), List(Literal(Constant(qualifiedName))))))),
-            AssignOrNamedArg(Ident(newTermName("required")),
-              Literal(Constant(true))),
-            AssignOrNamedArg(Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+            AssignOrNamedArg(
+              Ident(newTermName("required")),
+              Literal(Constant(true)))))
       }
     val dependentTypes = Set(t)
   }
@@ -307,15 +258,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
     val objectType = t.asInstanceOf[TypeRefApi].args.head.typeSymbol.asClass.fullName
     val mapperForType = selectFor(t.asInstanceOf[TypeRefApi].args.head)
     override val toString = s"OptionModelPropertyGenerator(${mapperForType.toString})"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
           Select(mapperForType.toModelProperty.tree, newTermName("copy")),
           List(
-            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(false))),
-            AssignOrNamedArg(Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(false)))))
       }
     val dependentTypes = mapperForType.dependentTypes
   }
@@ -323,7 +271,6 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
   class EnumModelPropertyGenerator(t: c.Type) extends ModelPropertyGenerator {
     import c.universe.Flag._
     override val toString = s"EnumModelPropertyGenerator(${t.typeSymbol.owner})"
-    val mappedBy = s"Mapped by ${this.toString}"
     val typeName = typeHelper.tree(typeHelper.getPath(t).reverse)
     val toModelProperty =
       c.Expr[ModelProperty] {
@@ -368,9 +315,6 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
                 Ident(newTermName("required")),
                 Literal(Constant(true))),
               AssignOrNamedArg(
-                Ident(newTermName("description")),
-                Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy))))),
-              AssignOrNamedArg(
                 Ident(newTermName("allowableValues")),
                 Apply(
                   Select(Select(Select(Select(Ident(newTermName("org")), newTermName("scalatra")), newTermName("swagger")), newTermName("AllowableValues")), newTermName("AllowableValuesList")),
@@ -383,7 +327,6 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
     val objectType = t.asInstanceOf[TypeRefApi].args.head.typeSymbol.asClass.fullName
     val mapperForType = selectFor(t.asInstanceOf[TypeRefApi].args.head)
     override val toString = s"IterModelPropertyGenerator(${mapperForType.toString})"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Block(
@@ -404,10 +347,7 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
                     AssignOrNamedArg(Ident(newTermName("uniqueItems")), Literal(Constant(false)))))),
               AssignOrNamedArg(
                 Ident(newTermName("required")),
-                Literal(Constant(true))),
-              AssignOrNamedArg(
-                Ident(newTermName("description")),
-                Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy))))))))
+                Literal(Constant(true))))))
       }
     val dependentTypes = mapperForType.dependentTypes
   }

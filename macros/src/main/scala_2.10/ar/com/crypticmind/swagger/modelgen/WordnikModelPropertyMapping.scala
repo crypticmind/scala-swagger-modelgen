@@ -15,7 +15,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
 
   object StringModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "StringModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -23,16 +22,13 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
           List(
             AssignOrNamedArg(Ident(newTermName("type")), Literal(Constant("string"))),
             AssignOrNamedArg(Ident(newTermName("qualifiedType")), Literal(Constant("java.lang.String"))),
-            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(true))),
-            AssignOrNamedArg(Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
 
   object IntModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "IntModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
@@ -40,9 +36,7 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
           List(
             AssignOrNamedArg(Ident(newTermName("type")), Literal(Constant("int"))),
             AssignOrNamedArg(Ident(newTermName("qualifiedType")), Literal(Constant("scala.Int"))),
-            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(true))),
-            AssignOrNamedArg(Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(true)))))
       }
     val dependentTypes = Set.empty[c.Type]
   }
@@ -51,7 +45,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
     val objectName = t.typeSymbol.name.toString
     val qualifiedType = t.typeSymbol.asClass.fullName
     override val toString = "ObjectModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}($objectName)"
     val toModelProperty =
       c.Expr[ModelProperty] {
       Apply(
@@ -60,9 +53,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
            AssignOrNamedArg(Ident(newTermName("type")), Literal(Constant(objectName))),
            AssignOrNamedArg(Ident(newTermName("qualifiedType")), Literal(Constant(qualifiedType))),
            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(true))),
-           AssignOrNamedArg(Ident(newTermName("description")),
-             Apply(
-               Ident(newTermName("Some")), List(Literal(Constant(mappedBy))))),
            AssignOrNamedArg(Ident(newTermName("items")), Apply(Ident(newTermName("Some")),
              List(
                Apply(Select(Select(Select(Select(Ident(newTermName("com")), newTermName("wordnik")), newTermName("swagger")), newTermName("model")), newTermName("ModelRef")),
@@ -76,15 +66,12 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
     val objectType = t.asInstanceOf[TypeRefApi].args.head.typeSymbol.asClass.fullName
     val mapperForType = selectFor(t.asInstanceOf[TypeRefApi].args.head)
     override val toString = s"OptionModelPropertyGenerator(${mapperForType.toString})"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Apply(
           Select(mapperForType.toModelProperty.tree, newTermName("copy")),
           List(
-            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(false))),
-            AssignOrNamedArg(Ident(newTermName("description")),
-              Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy)))))))
+            AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(false)))))
       }
     val dependentTypes = mapperForType.dependentTypes
   }
@@ -92,7 +79,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
   class EnumModelPropertyGenerator(t: c.Type) extends ModelPropertyGenerator {
     import c.universe.Flag._
     override val toString = s"EnumModelPropertyGenerator(${t.typeSymbol.owner})"
-    val mappedBy = s"Mapped by ${this.toString}"
     val typeName = typeHelper.tree(typeHelper.getPath(t).reverse)
     val toModelProperty =
       c.Expr[ModelProperty] {
@@ -133,8 +119,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
               AssignOrNamedArg(Ident(newTermName("type")), Literal(Constant("string"))),
               AssignOrNamedArg(Ident(newTermName("qualifiedType")), Literal(Constant("java.lang.String"))),
               AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(true))),
-              AssignOrNamedArg(Ident(newTermName("description")),
-                Apply(Ident(newTermName("Some")), List(Literal(Constant(mappedBy))))),
               AssignOrNamedArg(Ident(newTermName("allowableValues")),
                 Apply(
                   Select(Select(Select(Select(Ident(newTermName("com")), newTermName("wordnik")), newTermName("swagger")), newTermName("model")), newTermName("AllowableListValues")),
@@ -147,7 +131,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
     val objectType = t.asInstanceOf[TypeRefApi].args.head.typeSymbol.asClass.fullName
     val mapperForType = selectFor(t.asInstanceOf[TypeRefApi].args.head)
     override val toString = s"IterModelPropertyGenerator(${mapperForType.toString})"
-    val mappedBy = s"Mapped by ${this.toString}"
     val toModelProperty =
       c.Expr[ModelProperty] {
         Block(
@@ -159,8 +142,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
               AssignOrNamedArg(Ident(newTermName("type")), Literal(Constant("array"))),
               AssignOrNamedArg(Ident(newTermName("qualifiedType")), Literal(Constant("scala.collection.Iterable"))),
               AssignOrNamedArg(Ident(newTermName("required")), Literal(Constant(true))),
-              AssignOrNamedArg(Ident(newTermName("description")),
-                Apply(Ident(newTermName("Some")), List(Literal(Constant("mappedBy"))))),
               AssignOrNamedArg(Ident(newTermName("items")),
                 Apply(Ident(newTermName("Some")), List(
                   Apply(Select(Select(Select(Select(Ident(newTermName("com")), newTermName("wordnik")), newTermName("swagger")), newTermName("model")), newTermName("ModelRef")),

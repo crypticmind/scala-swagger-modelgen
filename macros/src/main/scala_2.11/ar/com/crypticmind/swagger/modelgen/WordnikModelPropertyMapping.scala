@@ -13,15 +13,13 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
 
   object StringModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "StringModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           com.wordnik.swagger.model.ModelProperty(
             `type` = "string",
             qualifiedType = "java.lang.String",
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -29,15 +27,13 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
 
   object IntModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "IntModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           com.wordnik.swagger.model.ModelProperty(
             `type` = "int",
             qualifiedType = "scala.Int",
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -47,7 +43,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
     val objectName = t.typeSymbol.name.toString
     val qualifiedType = t.typeSymbol.asClass.fullName
     override val toString = "ObjectModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}($objectName)"
     def toModelProperty =
       c.Expr[ModelProperty] {
         q"""
@@ -55,7 +50,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
             `type` = $objectName,
             qualifiedType = $qualifiedType,
             required = true,
-            description = Some($mappedBy),
             items = Some(com.wordnik.swagger.model.ModelRef(`type` = $objectName)))
         """
       }
@@ -66,17 +60,15 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
     val objectType = t.dealias.typeArgs.head.typeSymbol.asClass.fullName
     val mapperForType = selectFor(t.dealias.typeArgs.head)
     override val toString = s"OptionModelPropertyGenerator(${mapperForType.toString})"
-    val mappedBy = s"Mapped by ${this.toString}"
     def toModelProperty =
       c.Expr[ModelProperty] {
-        q" ${mapperForType.toModelProperty}.copy(required = false, description = Some($mappedBy)) "
+        q" ${mapperForType.toModelProperty}.copy(required = false) "
       }
     val dependentTypes = mapperForType.dependentTypes
   }
 
   class EnumModelPropertyGenerator(t: c.Type) extends ModelPropertyGenerator {
     override val toString = s"EnumModelPropertyGenerator(${t.typeSymbol.owner})"
-    val mappedBy = s"Mapped by ${this.toString}"
     def toModelProperty =
       c.Expr[ModelProperty] {
         q""" {
@@ -92,7 +84,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
             `type` = "string",
             qualifiedType = "java.lang.String",
             required = true,
-            description = Some($mappedBy),
             allowableValues = com.wordnik.swagger.model.AllowableListValues(values))
         }
         """
@@ -104,7 +95,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
     val objectType = t.dealias.typeArgs.head.typeSymbol.asClass.fullName
     val mapperForType = selectFor(t.dealias.typeArgs.head)
     override val toString = s"IterModelPropertyGenerator(${mapperForType.toString})"
-    val mappedBy = s"Mapped by ${this.toString}"
 
     def toModelProperty = {
       c.Expr[ModelProperty] {
@@ -114,7 +104,6 @@ class WordnikModelPropertyMapping[C <: Context](val c: C) {
             `type` = "array",
             qualifiedType = "scala.collection.Iterable",
             required = true,
-            description = Some($mappedBy),
             items = Some(com.wordnik.swagger.model.ModelRef(`type` = refType)))
         }
         """

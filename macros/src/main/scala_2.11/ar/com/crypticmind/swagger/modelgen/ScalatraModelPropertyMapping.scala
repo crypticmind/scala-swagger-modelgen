@@ -14,14 +14,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object StringModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "StringModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.String,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -29,14 +27,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object IntModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "IntModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.Int,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -44,14 +40,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object DoubleModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "DoubleModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.Double,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -59,14 +53,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object FloatModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "FloatModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.Float,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -74,14 +66,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object LongModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "LongModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.Long,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -89,14 +79,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object BigDecimalModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "BigDecimalModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType("decimal", None),
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -104,14 +92,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object CharModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "CharModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType("string", Some("char(1)")),
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -119,14 +105,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object ShortModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "ShortModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType("integer", Some("int16")),
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -134,14 +118,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object ByteModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "ByteModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.Byte,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -149,14 +131,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object BooleanModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "BooleanModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.Boolean,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -164,14 +144,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object LocalDateModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "LocalDateModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.Date,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -179,14 +157,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
 
   object LocalDateTimeModelPropertyGenerator extends ModelPropertyGenerator {
     override val toString = "(Local)DateTimeModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}"
-    def toModelProperty =
+    val toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.DateTime,
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set.empty[c.Type]
@@ -196,14 +172,12 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
     val objectName = t.typeSymbol.name.toString
     val qualifiedName = t.typeSymbol.asClass.fullName
     override val toString = "ObjectModelPropertyGenerator"
-    val mappedBy = s"Mapped by ${this.toString}($objectName)"
     def toModelProperty =
       c.Expr[ModelProperty] {
         q"""
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.ValueDataType($objectName, None, Some($qualifiedName)),
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         """
       }
     val dependentTypes = Set(t)
@@ -213,17 +187,15 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
     val objectType = t.dealias.typeArgs.head.typeSymbol.asClass.fullName
     val mapperForType = selectFor(t.dealias.typeArgs.head)
     override val toString = s"OptionModelPropertyGenerator(${mapperForType.toString})"
-    val mappedBy = s"Mapped by ${this.toString}"
     def toModelProperty =
       c.Expr[ModelProperty] {
-        q" ${mapperForType.toModelProperty}.copy(required = false, description = Some($mappedBy)) "
+        q" ${mapperForType.toModelProperty}.copy(required = false) "
       }
     val dependentTypes = mapperForType.dependentTypes
   }
 
   class EnumModelPropertyGenerator(t: c.Type) extends ModelPropertyGenerator {
     override val toString = s"EnumModelPropertyGenerator(${t.typeSymbol.owner})"
-    val mappedBy = s"Mapped by ${this.toString}"
     def toModelProperty =
       c.Expr[ModelProperty] {
         q""" {
@@ -238,7 +210,6 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.String,
             required = true,
-            description = Some($mappedBy),
             allowableValues = org.scalatra.swagger.AllowableValues.AllowableValuesList(values))
         }
         """
@@ -250,7 +221,6 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
     val objectType = t.dealias.typeArgs.head.typeSymbol.asClass.fullName
     val mapperForType = selectFor(t.dealias.typeArgs.head)
     override val toString = s"IterModelPropertyGenerator(${mapperForType.toString})"
-    val mappedBy = s"Mapped by ${this.toString}"
 
     def toModelProperty = {
       c.Expr[ModelProperty] {
@@ -258,8 +228,7 @@ class ScalatraModelPropertyMapping[C <: Context](val c: C) {
           val refType = ${mapperForType.toModelProperty}.`type`
           org.scalatra.swagger.ModelProperty(
             `type` = org.scalatra.swagger.DataType.ContainerDataType("Array", Some(refType), uniqueItems = false),
-            required = true,
-            description = Some($mappedBy))
+            required = true)
         }
         """
       }
