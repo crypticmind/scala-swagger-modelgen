@@ -1,33 +1,29 @@
 package ar.com.crypticmind.swagger.modelgen
 
-import org.scalatra.swagger.Model
-import language.experimental.macros
-import reflect.macros.whitebox.Context
+import com.wordnik.swagger.model.Model
 
-object ScalatraModelGeneratorMacro {
+import scala.language.experimental.macros
+import scala.reflect.macros.whitebox.Context
+
+object WordnikModelGeneratorMacro {
 
   def generate[T]: Model = macro generateImpl[T]
 
-  def generateImpl[T : c.WeakTypeTag](c: Context): c.Expr[Model] = {
+  def generateImpl[T: c.WeakTypeTag](c: Context): c.Expr[Model] = {
     import c.universe._
     val tpe = weakTypeOf[T]
     new Processor[c.type](c).processType(tpe)
   }
 
   private class Processor[C <: Context](val c: C) {
+    import c.universe._
     def processType(tpe: c.Type, filterDependentTypes: Set[c.Type] = Set.empty[c.Type]): c.Expr[Model] = {
-      import c.universe._
 
-      val primaryConstructor = tpe.decls.collectFirst {
+      val fields = tpe.decls.collectFirst {
         case m: MethodSymbol if m.isPrimaryConstructor ⇒ m
-      }
+      }.get.paramLists.head
 
-      val fields = primaryConstructor match {
-        case Some(pc) => pc.paramLists.head
-        case None => List.empty
-      }
-
-      val m = new ScalatraModelPropertyMapping[c.type](c)
+      val m = new WordnikModelPropertyMapping[c.type](c)
 
       val params = fields.map { field =>
         val fieldName = field.name.toString
@@ -51,17 +47,17 @@ object ScalatraModelGeneratorMacro {
 
       c.Expr[Model] {
         q""" {
-          implicitly[ar.com.crypticmind.swagger.modelgen.ModelRegister[org.scalatra.swagger.Model]].get($modelName) match {
+          implicitly[ar.com.crypticmind.swagger.modelgen.ModelRegister[com.wordnik.swagger.model.Model]].get($modelName) match {
             case Some(existingModel) =>
               existingModel
             case None =>
               val model =
-                org.scalatra.swagger.Model(
+                com.wordnik.swagger.model.Model(
                   id = $modelName,
                   name = $modelName,
-                  qualifiedName = Some($qualifiedName),
-                  properties = List(..$params))
-              val registeredModel = implicitly[ar.com.crypticmind.swagger.modelgen.ModelRegister[org.scalatra.swagger.Model]].register(model)
+                  qualifiedType = $qualifiedName,
+                  properties = scala.collection.mutable.LinkedHashMap(..$params))
+              val registeredModel = implicitly[ar.com.crypticmind.swagger.modelgen.ModelRegister[com.wordnik.swagger.model.Model]].register(model)
               ..$generateDependentTypes
               registeredModel
           }

@@ -1,7 +1,7 @@
 package ar.com.crypticmind.swagger.modelgen
 
 import com.wordnik.swagger.model.ModelProperty
-import reflect.macros.whitebox.Context
+import scala.reflect.macros.whitebox.Context
 
 class WordnikModelPropertyMapping[C <: Context](val c: C) {
   import c.universe._
